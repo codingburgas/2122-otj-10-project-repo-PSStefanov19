@@ -12,5 +12,6 @@ namespace pm::dal
 		void update(pm::types::User user);
 		pm::types::User getById(uint8_t id);
 		pm::types::User getByUsername(std::string username);
+		pm::types::User getByEmail(std::string email);
 	};
 }

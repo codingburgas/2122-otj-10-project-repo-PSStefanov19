@@ -11,5 +11,6 @@
 #include "../pm.types/User.h"
 #include <vector>
 #include <string>
+#include <algorithm>
 
 #endif //PCH_H

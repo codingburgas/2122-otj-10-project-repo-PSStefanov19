@@ -37,3 +37,14 @@ pm::types::User pm::dal::UserStore::getByUsername(std::string username)
         }
     }
 }
+
+pm::types::User pm::dal::UserStore::getByEmail(std::string email)
+{
+    for (auto user : users)
+    {
+        if (user.email == email)
+        {
+            return user;
+        }
+    }
+}
