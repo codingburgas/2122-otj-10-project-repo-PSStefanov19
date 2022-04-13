@@ -17,6 +17,11 @@ void pm::dal::UserStore::remove(uint8_t id)
     users.erase(users.begin() + id);
 }
 
+void pm::dal::UserStore::update(pm::types::User user)
+{
+    users.at(user.id) = user;
+}
+
 pm::types::User pm::dal::UserStore::getById(uint8_t id)
 {
     return users.at(id);
