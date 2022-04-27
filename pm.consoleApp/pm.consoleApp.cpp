@@ -4,15 +4,7 @@
 
 int main()
 {
-	pm::types::User user = { 1, "Pres", "123", "abc", "def", "pp@codingburgas.bg", 12 };
 	pm::dal::UserStore uStore;
 
-	uStore.createUser(user);
-
-	auto allUsers = uStore.getAll();
-
-	for (const auto user : allUsers) 
-	{
-		std::cout << user.firstName << std::endl;
-	}
+	uStore.createUser("Mitko123", "123", "fName", "lName", "email", 12);
 }

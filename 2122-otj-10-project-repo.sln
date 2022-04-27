@@ -6,15 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pm.types", "pm.types\pm.types.vcxproj", "{8A86B687-E124-4F89-BDD2-3379AD0931C6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pm.dal", "pm.dal\pm.dal.vcxproj", "{206B27DD-0D1B-4C15-B551-ACBE2C446CF5}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8A86B687-E124-4F89-BDD2-3379AD0931C6} = {8A86B687-E124-4F89-BDD2-3379AD0931C6}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pm.consoleApp", "pm.consoleApp\pm.consoleApp.vcxproj", "{7FE12419-1954-4650-AED9-973D464263FF}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8A86B687-E124-4F89-BDD2-3379AD0931C6} = {8A86B687-E124-4F89-BDD2-3379AD0931C6}
-		{206B27DD-0D1B-4C15-B551-ACBE2C446CF5} = {206B27DD-0D1B-4C15-B551-ACBE2C446CF5}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

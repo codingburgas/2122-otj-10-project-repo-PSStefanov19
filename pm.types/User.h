@@ -1,17 +1,28 @@
 #pragma once
 
-#include "pch.h"
+#include <iostream>
+#include <string>
+#include <ctime>
 
-namespace pm::types
+namespace pm
 {
-	struct User
-	{
-		int id;
-		std::string username;
-		std::string passwordHash;
-		std::string firstName;
-		std::string lastName;
-		std::string email;
-		time_t dateOfCreation;
-	};
+	namespace types {
+		struct User
+		{
+			int id;
+			std::string username;
+			std::string passwordHash;
+			std::string firstName;
+			std::string lastName;
+			std::string email;
+			time_t dateOfCreation;
+
+			User(int id,
+				std::string username,
+				std::string passwordHash,
+				std::string firstName,
+				std::string lastName,
+				std::string email, time_t dateOfCreation);
+		};
+	}
 }
