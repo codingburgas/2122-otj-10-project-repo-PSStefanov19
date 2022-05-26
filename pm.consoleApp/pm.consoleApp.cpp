@@ -1,18 +1,11 @@
-#include "../pm.dal/UserStore.h"
-#include "../pm.types/User.h"
+#include "../pm.dal/UserManager.h"
 #include <iostream>
 
 int main()
 {
-	pm::types::User user = { 1, "Pres", "123", "abc", "def", "pp@codingburgas.bg", 12 };
-	pm::dal::UserStore uStore;
+	pm::dal::UserManager& uMan = pm::dal::UserManager::getInstance();
+	uMan.createUser("user1", "pass1", "fname1", "lname1", "email1", 1);
+	uMan.createUser("user2", "pass2", "fname2", "lname2", "email2");
 
-	uStore.createUser(user);
-
-	auto allUsers = uStore.getAll();
-
-	for (const auto user : allUsers) 
-	{
-		std::cout << user.firstName << std::endl;
-	}
+	uMan.displayUsers();
 }
