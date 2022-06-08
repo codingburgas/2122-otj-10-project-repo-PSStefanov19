@@ -4,6 +4,7 @@
 #include <list>
 #include <string>
 #include <fstream>
+#include <filesystem>
 
 #include "../pm.types/User.h"
 
@@ -22,9 +23,12 @@ namespace pm::dal
 			const time_t dateOfCreation = 0);
 
 		void displayUsers();
+		void createDB();
 	private:
-		UserManager();
+		UserManager() {};
 		UserManager(const UserManager&) {};
+		
 		std::list<pm::types::User> users;
+		std::fstream db;
 	};
 }

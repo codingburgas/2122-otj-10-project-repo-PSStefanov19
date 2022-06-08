@@ -9,7 +9,7 @@ pm::types::User::User(int i,
 	time_t dOC)
 {
 	id = i;
-	passwordHash = md5(passwd);
+	passwordHash = passwd;
 	username = uname;
 	firstName = fName;
 	lastName = lName;
