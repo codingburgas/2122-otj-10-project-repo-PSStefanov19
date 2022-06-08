@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include "../pm.tools/md5.h"
+
 namespace pm::types
 {
 	class User
@@ -24,5 +26,7 @@ namespace pm::types
 		int getId();
 
 		std::string getUsername();
+
+		std::string getPassword();
 	};
 }

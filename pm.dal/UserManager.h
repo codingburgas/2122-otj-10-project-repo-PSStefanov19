@@ -3,6 +3,7 @@
 #include <iostream>
 #include <list>
 #include <string>
+#include <fstream>
 
 #include "../pm.types/User.h"
 
@@ -22,7 +23,7 @@ namespace pm::dal
 
 		void displayUsers();
 	private:
-		UserManager() {};
+		UserManager();
 		UserManager(const UserManager&) {};
 		std::list<pm::types::User> users;
 	};

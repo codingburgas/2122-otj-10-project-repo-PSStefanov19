@@ -9,7 +9,7 @@ pm::types::User::User(int i,
 	time_t dOC)
 {
 	id = i;
-	passwordHash = passwd;
+	passwordHash = md5(passwd);
 	username = uname;
 	firstName = fName;
 	lastName = lName;
@@ -25,4 +25,9 @@ int pm::types::User::getId()
 std::string pm::types::User::getUsername()
 {
 	return username;
+}
+
+std::string pm::types::User::getPassword()
+{
+	return passwordHash;
 }

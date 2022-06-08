@@ -13,8 +13,7 @@ void pm::dal::UserManager::createUser(const std::string username,
 	const std::string email,
 	const time_t dateOfCreation)
 {
-    pm::types::User u(users.size() + 1, username, passwordHash, firstName, lastName, email, dateOfCreation);
-    users.push_back(u);
+    
 }
 
 void pm::dal::UserManager::displayUsers() 
@@ -23,6 +22,7 @@ void pm::dal::UserManager::displayUsers()
 	{
 		std::cout << "Id: " << user.getId() << "\n";
 		std::cout << "UserName: " << user.getUsername() << "\n";
+		std::cout << "Pass: " << user.getPassword() << "\n";
 		std::cout << "\n";
 		std::cout.flush();
 	}
