@@ -6,6 +6,7 @@
 #include <fstream>
 #include <filesystem>
 
+#include "../pm.tools/csv.h"
 #include "../pm.types/User.h"
 
 namespace pm::dal
@@ -24,10 +25,12 @@ namespace pm::dal
 
 		void displayUsers();
 		void createDB();
+
+		void parseUsers();
 	private:
 		UserManager() {};
 		UserManager(const UserManager&) {};
-		
+
 		std::list<pm::types::User> users;
 		std::fstream db;
 	};

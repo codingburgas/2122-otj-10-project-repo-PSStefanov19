@@ -22,6 +22,7 @@
     <ClCompile Include="md5.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="csv.h" />
     <ClInclude Include="md5.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -50,7 +50,36 @@ void pm::dal::UserManager::createDB()
 
 	time_t t = time(0);
 	tm* time = localtime(&t);
-	db << "admin, " << md5("adminpass") << ", NULL, NULL, NULL, " << std::put_time(time, "%F") << "\n";
+	db << "Username,Password,FirstName,LastName,Email,DateOfCreation\n";
+	db << "admin," << md5("adminpass") << ",NULL,NULL,NULL," << std::put_time(time, "%F") << "\n";
 	db.flush();
 	db.close();
+}
+
+void pm::dal::UserManager::parseUsers()
+{
+	db.open("../data/db.csv", std::ios::in);
+
+	if (!db.is_open()) 
+	{
+		return;
+	}
+
+
+	std::string line;
+	
+	io::CSVReader<6> reader("../data/db.csv");
+
+	reader.read_header(io::ignore_extra_column, "Username", "Password", "FirstName", "LastName", "Email", "DateOfCreation");
+
+	std::string username;
+	std::string password;
+	std::string firstName;
+	std::string lastName;
+	std::string email;
+	std::time_t dOC;
+	while (reader.read_row(username, password, firstName, lastName, email, dOC)) 
+	{
+		users.push_back(pm::types::User(users.size() + 1, username, password, firstName, lastName, email, dOC));
+	}
 }
