@@ -11,7 +11,7 @@
 
 namespace pm::dal
 {
-	class UserManager 
+	class UserManager
 	{
 	public:
 		static UserManager& getInstance();
@@ -21,17 +21,19 @@ namespace pm::dal
 			const std::string firstName,
 			const std::string lastName,
 			const std::string email,
-			const time_t dateOfCreation = 0);
+			const time_t dateOfCreation = 0,
+			const bool isAdmin = false);
 
 		void displayUsers();
 		void createDB();
 
-		void parseUsers();
+		void setId(int newId);
+		void syncId();
 	private:
 		UserManager() {};
 		UserManager(const UserManager&) {};
 
-		std::list<pm::types::User> users;
+		int lastId = 0;
 		std::fstream db;
 	};
 }

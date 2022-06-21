@@ -6,7 +6,8 @@ pm::types::User::User(int i,
 	std::string fName,
 	std::string lName,
 	std::string e,
-	time_t dOC)
+	time_t dOC,
+	bool isAdmin)
 {
 	id = i;
 	passwordHash = passwd;
@@ -15,6 +16,7 @@ pm::types::User::User(int i,
 	lastName = lName;
 	email = e;
 	dateOfCreation = dOC;
+	this->isAdmin = isAdmin;
 }
 
 int pm::types::User::getId()

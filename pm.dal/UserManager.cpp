@@ -11,37 +11,44 @@ void pm::dal::UserManager::createUser(const std::string username,
 	const std::string firstName,
 	const std::string lastName,
 	const std::string email,
-	const time_t dateOfCreation)
+	const time_t dateOfCreation,
+	const bool isAdmin)
 {
-	db.open("../data/db.csv", std::ios::out | std::ios::app);
+	db.open("../data/users.csv", std::ios::out | std::ios::app);
 
 	if (!db.is_open()) 
 	{
 		return;
 	}
-
-	db << username << ", " << md5(passwordHash) << ", " << firstName << ", " << lastName << ", " << email << ", " << dateOfCreation << "\n";
+	db << lastId << ", "<< username << ", " << md5(passwordHash) << ", " << firstName << ", " << lastName << ", " << email << ", " << dateOfCreation << "," <<isAdmin << "\n";
 	db.flush();
 
+	lastId++;
 	db.close();
 }
 
 void pm::dal::UserManager::displayUsers() 
 {
-	for (pm::types::User user : users) 
+	if (!std::filesystem::exists("../data/users.csv")) 
 	{
-		std::cout << "Id: " << user.getId() << "\n";
-		std::cout << "UserName: " << user.getUsername() << "\n";
-		std::cout << "Pass: " << user.getPassword() << "\n";
-		std::cout << "\n";
-		std::cout.flush();
+		return;
+	}
+
+	io::CSVReader<8> in("../data/users.csv");
+
+	in.read_header(io::ignore_missing_column, "Id", "Username", "Password", "FirstName", "LastName", "Email", "DateOfCreation", "isAdmin");
+	std::string username, password, firstName, lastName, email, dateOfCreation;
+	short int isAdmin;
+	while (in.read_row(lastId,username, password, firstName, lastName, email, dateOfCreation, isAdmin)) 
+	{
+		std::cout << lastId << " " << username << " " <<email << " " << bool(isAdmin) << std::endl;
 	}
 }
 
 void pm::dal::UserManager::createDB()
 {
 	std::filesystem::create_directories("../data");
-	db.open("../data/db.csv", std::ios::out);
+	db.open("../data/users.csv", std::ios::out);
 
 	if (!db.is_open()) 
 	{
@@ -50,36 +57,33 @@ void pm::dal::UserManager::createDB()
 
 	time_t t = time(0);
 	tm* time = localtime(&t);
-	db << "Username,Password,FirstName,LastName,Email,DateOfCreation\n";
-	db << "admin," << md5("adminpass") << ",NULL,NULL,NULL," << std::put_time(time, "%F") << "\n";
+	db << "Id,Username,Password,FirstName,LastName,Email,DateOfCreation,isAdmin\n";
+	db << lastId <<",admin," << md5("adminpass") << ",NULL,NULL,NULL," << std::put_time(time, "%F") << ",1\n";
+	lastId++;
 	db.flush();
 	db.close();
 }
 
-void pm::dal::UserManager::parseUsers()
+void pm::dal::UserManager::setId(int newId)
 {
-	db.open("../data/db.csv", std::ios::in);
+	this->lastId = newId;
+}
 
+void pm::dal::UserManager::syncId()
+{
+	std::string s;
+	int i = -1;
+	db.open("../data/users.csv", std::ios::in);
 	if (!db.is_open()) 
 	{
 		return;
 	}
 
-
-	std::string line;
-	
-	io::CSVReader<6> reader("../data/db.csv");
-
-	reader.read_header(io::ignore_extra_column, "Username", "Password", "FirstName", "LastName", "Email", "DateOfCreation");
-
-	std::string username;
-	std::string password;
-	std::string firstName;
-	std::string lastName;
-	std::string email;
-	std::time_t dOC;
-	while (reader.read_row(username, password, firstName, lastName, email, dOC)) 
+	while (getline(db, s)) 
 	{
-		users.push_back(pm::types::User(users.size() + 1, username, password, firstName, lastName, email, dOC));
+		i++;
 	}
+	setId(i);
+
+	db.close();
 }

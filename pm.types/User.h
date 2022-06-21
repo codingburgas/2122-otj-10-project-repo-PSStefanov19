@@ -14,7 +14,7 @@ namespace pm::types
 		std::string lastName;
 		std::string email;
 		time_t dateOfCreation;
-
+		bool isAdmin;
 	public:
 		pm::types::User(int,
 			std::string,
@@ -22,7 +22,8 @@ namespace pm::types
 			std::string,
 			std::string,
 			std::string,
-			time_t);
+			time_t,
+			bool);
 		int getId();
 
 		std::string getUsername();
