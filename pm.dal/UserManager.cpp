@@ -47,7 +47,6 @@ void pm::dal::UserManager::displayUsers()
 
 void pm::dal::UserManager::createDB()
 {
-	std::filesystem::create_directories("../data");
 	db.open("../data/users.csv", std::ios::out);
 
 	if (!db.is_open()) 

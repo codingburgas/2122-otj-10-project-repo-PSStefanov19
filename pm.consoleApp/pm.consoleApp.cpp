@@ -1,19 +1,16 @@
 #include "../pm.dal/UserManager.h"
+#include "../pm.dal/TeamManager.h"
 #include <iostream>
 
 int main()
 {
 	pm::dal::UserManager& uMan = pm::dal::UserManager::getInstance();
-
-	if (!std::filesystem::exists("../data/users.csv")) 
+	pm::dal::TeamManager& tMan = pm::dal::TeamManager::getInstance();
+	std::filesystem::create_directories("../data");
+	if (!std::filesystem::exists("../data/teams.csv"))
 	{
-		uMan.createDB();
+		tMan.createDB();
 	}
-
-	uMan.syncId();
-
-	uMan.createUser("user1", "pass1", "fname1", "lname1", "email1", 1);
-	uMan.createUser("user2", "pass2", "fname2", "lname2", "email2");
-
-	uMan.displayUsers();
+	int ids[] = { 1, 4, 5 };
+	tMan.createTeam("Team1", ids);
 }
