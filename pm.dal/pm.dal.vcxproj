@@ -154,10 +154,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Manager.h" />
     <ClInclude Include="TeamManager.h" />
     <ClInclude Include="UserManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Manager.cpp" />
     <ClCompile Include="TeamManager.cpp" />
     <ClCompile Include="UserManager.cpp" />
   </ItemGroup>
