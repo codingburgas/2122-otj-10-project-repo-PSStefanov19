@@ -5,6 +5,8 @@
 #include <string>
 #include <fstream>
 #include <filesystem>
+#include <sstream>
+#include <iomanip>
 
 #include "../pm.tools/csv.h"
 #include "../pm.types/User.h"
@@ -33,7 +35,7 @@ namespace pm
 				const time_t dateOfCreation = 0,
 				const bool isAdmin = false);
 
-			void displayUsers();
+			std::vector<pm::types::User> getAllUsers();
 			void createDB();
 
 			void setId(int newId);

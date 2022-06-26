@@ -12,7 +12,6 @@ int main()
     pm::dal::TeamManager& tman = pm::dal::TeamManager::getInstance();
     
     pm::pl::VIEW* views = new pm::pl::VIEW[4];
-
     if(!std::filesystem::exists("../data"))
     {
         std::filesystem::create_directory("../data/");
@@ -20,6 +19,7 @@ int main()
     uman.createDB();
     tman.createDB();
     
+    uman.createUser("petio", "1234", "Petur", "Georgiev", "pgeorgiev@codingburgas.bg", NULL, true);
     initscr();
     
     pm::pl::configCurses();

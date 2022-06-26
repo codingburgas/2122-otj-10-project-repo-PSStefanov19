@@ -29,7 +29,18 @@ std::string pm::types::User::getUsername()
 	return username;
 }
 
-std::string pm::types::User::getPassword()
+std::string pm::types::User::getFirstName()
 {
-	return passwordHash;
+	return firstName;
 }
+
+std::string pm::types::User::getLastName()
+{
+	return lastName;
+}
+
+std::string pm::types::User::getEmail()
+{
+	return email;
+}
+

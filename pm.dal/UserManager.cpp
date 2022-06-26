@@ -13,6 +13,7 @@ void pm::dal::UserManager::createUser(const std::string username,
 
 	if (!db.is_open()) 
 	{
+		throw "Could not open file";
 		return;
 	}
 	db << lastId << ", "<< username << ", " << md5(passwordHash) << ", " << firstName << ", " << lastName << ", " << email << ", " << dateOfCreation << "," <<isAdmin << "\n";
@@ -22,22 +23,57 @@ void pm::dal::UserManager::createUser(const std::string username,
 	db.close();
 }
 
-void pm::dal::UserManager::displayUsers() 
+std::vector<pm::types::User> pm::dal::UserManager::getAllUsers()
 {
-	if (!std::filesystem::exists("../data/users.csv")) 
-	{
-		return;
-	}
-
 	io::CSVReader<8> in("../data/users.csv");
-
-	in.read_header(io::ignore_missing_column, "Id", "Username", "Password", "FirstName", "LastName", "Email", "DateOfCreation", "isAdmin");
+	in.read_header(
+		io::ignore_extra_column,
+		"Id",
+		"Username",
+		"Password",
+		"FirstName",
+		"LastName",
+		"Email",
+		"DateOfCreation",
+		"isAdmin"
+	);
+	
+	std::vector <pm::types::User> allUsers;
+	int id, isAdmin;
 	std::string username, password, firstName, lastName, email, dateOfCreation;
-	short int isAdmin;
-	while (in.read_row(lastId,username, password, firstName, lastName, email, dateOfCreation, isAdmin)) 
+	
+	std::stringstream s;
+
+	while (in.read_row(id,
+		username,
+		password,
+		firstName,
+		lastName,
+		email,
+		dateOfCreation,
+		isAdmin)) 
 	{
-		std::cout << lastId << " " << username << " " <<email << " " << bool(isAdmin) << std::endl;
+		tm doc;
+
+		s.str("");
+		s.clear();
+
+		s << dateOfCreation;
+
+		s >> std::get_time(&doc, "%F");
+
+		allUsers.push_back(pm::types::User(id,
+			username,
+			password,
+			firstName,
+			lastName,
+			email,
+			mktime(&doc),
+			bool(isAdmin)
+		));
 	}
+
+	return allUsers;
 }
 
 void pm::dal::UserManager::createDB()
