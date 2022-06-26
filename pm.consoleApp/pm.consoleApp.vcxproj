@@ -143,8 +143,8 @@
     <ClCompile Include="pm.consoleApp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\pm.dal\pm.dal.vcxproj">
-      <Project>{206b27dd-0d1b-4c15-b551-acbe2c446cf5}</Project>
+    <ProjectReference Include="..\pm.bll\pm.bll.vcxproj">
+      <Project>{6e40d830-e55e-44f1-ae3f-cd8fbcc15dc7}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
