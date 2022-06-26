@@ -15,25 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="md5.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="TUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="md5.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="csv.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="curses.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="curspriv.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="panel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="TUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
