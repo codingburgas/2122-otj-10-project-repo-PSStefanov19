@@ -1,10 +1,5 @@
 #include "UserManager.h"
 
-pm::dal::UserManager& pm::dal::UserManager::getInstance()
-{
-    static pm::dal::UserManager u;
-    return u;
-}
 
 void pm::dal::UserManager::createUser(const std::string username,
 	const std::string passwordHash,

@@ -5,23 +5,33 @@
 #include "../pm.types/Team.h"
 #include "../pm.tools/csv.h"
 
-namespace pm::dal 
+namespace pm 
 {
-    class TeamManager 
+    namespace dal 
     {
-    public:
-        static TeamManager& getInstance();
+        class TeamManager
+        {
+        public:
+	        static TeamManager& getInstance() 
+			{
+				static pm::dal::TeamManager t;
+				return t;
+			}
 
-        void createTeam(const std::string teamName, const int* userIds);
-        void createDB();
+			TeamManager (TeamManager const&) = delete;
+			void operator=(TeamManager const&) = delete;
 
-        void syncId();
-        void setId(const int newId);
-    private:
-        TeamManager() {};
-        TeamManager(const TeamManager&) {};
 
-        int lastId = 0;
-        std::fstream db;
-    };
+            void createTeam(const std::string teamName, const int* userIds);
+            void createDB();
+
+            void syncId();
+            void setId(const int newId);
+        private:
+            TeamManager() {}
+
+            int lastId = 0;
+            std::fstream db;
+        };
+    }
 }

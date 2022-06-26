@@ -86,8 +86,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,6 +146,12 @@
     <ClCompile Include="pm.consoleApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\pm.bll\pm.bll.vcxproj">
+      <Project>{6e40d830-e55e-44f1-ae3f-cd8fbcc15dc7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\pm.dal\pm.dal.vcxproj">
+      <Project>{206b27dd-0d1b-4c15-b551-acbe2c446cf5}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\pm.pl\pm.pl.vcxproj">
       <Project>{0e43a256-69d0-41f4-b429-7e88d0b72808}</Project>
     </ProjectReference>

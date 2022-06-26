@@ -1,11 +1,5 @@
 #include "TeamManager.h"
 
-pm::dal::TeamManager& pm::dal::TeamManager::getInstance()
-{
-    static pm::dal::TeamManager t;
-    return t;
-}
-
 void pm::dal::TeamManager::createTeam(const std::string teamName, const int* userIds)
 {
 	db.open("../data/teams.csv", std::ios::out | std::ios::app);
