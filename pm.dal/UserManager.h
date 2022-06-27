@@ -38,8 +38,7 @@ namespace pm
 			std::vector<pm::types::User> getAllUsers();
 			void createDB();
 
-			void setId(int newId);
-			void syncId();
+			int getLastId();
 		private:
 			UserManager() {}
 

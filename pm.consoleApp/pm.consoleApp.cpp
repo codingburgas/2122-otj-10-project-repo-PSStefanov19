@@ -20,6 +20,7 @@ int main()
     tman.createDB();
     
     uman.createUser("petio", "1234", "Petur", "Georgiev", "pgeorgiev@codingburgas.bg", NULL, true);
+    uman.createUser("petio", "1234", "Petur", "Georgiev", "pgeorgiev@codingburgas.bg", NULL, true);
     initscr();
     
     pm::pl::configCurses();

@@ -9,6 +9,8 @@ void pm::dal::UserManager::createUser(const std::string username,
 	const time_t dateOfCreation,
 	const bool isAdmin)
 {
+	static int lastId = getLastId() - 1;
+
 	db.open("../data/users.csv", std::ios::out | std::ios::app);
 
 	if (!db.is_open()) 
@@ -76,6 +78,26 @@ std::vector<pm::types::User> pm::dal::UserManager::getAllUsers()
 	return allUsers;
 }
 
+int pm::dal::UserManager::getLastId()
+{
+	db.open("../data/users.csv", std::ios::in);
+
+	std::string unused;
+	int i = 0;
+
+	if (!db.is_open()) 
+	{
+		return NULL;
+	}
+
+	while (std::getline(db, unused)) 
+	{
+		i++;
+	}
+	db.close();
+	return i;
+}
+
 void pm::dal::UserManager::createDB()
 {
 	db.open("../data/users.csv", std::ios::out);
@@ -94,26 +116,3 @@ void pm::dal::UserManager::createDB()
 	db.close();
 }
 
-void pm::dal::UserManager::setId(int newId)
-{
-	this->lastId = newId;
-}
-
-void pm::dal::UserManager::syncId()
-{
-	std::string s;
-	int i = -1;
-	db.open("../data/users.csv", std::ios::in);
-	if (!db.is_open()) 
-	{
-		return;
-	}
-
-	while (getline(db, s)) 
-	{
-		i++;
-	}
-	setId(i);
-
-	db.close();
-}
