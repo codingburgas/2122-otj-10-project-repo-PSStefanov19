@@ -6,18 +6,34 @@ void updateViews()
     doupdate();
 }
 
-void clearWindows(pm::pl::VIEW* views)
+void clearWindows(pm::pl::managmentView v, pm::pl::VIEW* views)
 {
-        for (size_t i = 0; i < 3; i++)
-        {
-            wclear(views[i].win);
-            box(views[i].win, 0, 0);
-        }
-        mvwprintw(views[0].win, 0, 1, " (U)sers Managment ");
-        mvwprintw(views[0].win, 0, 21, " (T)eams Managment ");
+    for (size_t i = 0; i < 3; i++)
+    {
+        wclear(views[i].win);
+        box(views[i].win, 0, 0);
+    }
+    mvwprintw(views[0].win, 0, 1, " (U)sers Managment ");
+    mvwprintw(views[0].win, 0, 21, " (T)eams Managment ");
+    mvwprintw(views[0].win, 0, 41, " (P)roject Managment ");
 
-        mvwprintw(views[1].win, 0, 1, " Actions ");
+    switch (v)
+    {
+    case pm::pl::User:
+        mvwchgat(views[0].win, 0, 2, 17, A_REVERSE, 1, NULL);
+        break;
+    case pm::pl::Team:
+        mvwchgat(views[0].win, 0, 22, 17, A_REVERSE, 1, NULL);
+        break;
+    case pm::pl::Project:
+        mvwchgat(views[0].win, 0, 42, 19, A_REVERSE, 1, NULL);
+        break;
+    }
 
+    mvwprintw(views[1].win, 0, 1, " Actions ");
+    mvwprintw(views[1].win, 1, 2, "(C)reate");
+    mvwprintw(views[1].win, 2, 2, "(E)dit");
+    mvwprintw(views[1].win, 3, 2, "(D)elete");
 }
 
 void pm::pl::configCurses()
@@ -83,8 +99,6 @@ void displayView(pm::pl::managmentView v, WINDOW* displayWin)
         break;
     case pm::pl::Project:
         break;
-    default:
-        break;
     }
 }
 
@@ -94,7 +108,7 @@ void pm::pl::TUI(pm::pl::VIEW* views)
 
     while (true)
     {
-        clearWindows(views);
+        clearWindows(m, views);
         displayView(m, views[2].win);
         updateViews();
         getch();
