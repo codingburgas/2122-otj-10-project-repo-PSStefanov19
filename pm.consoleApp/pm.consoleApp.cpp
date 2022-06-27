@@ -19,14 +19,11 @@ int main()
     uman.createDB();
     tman.createDB();
     
-    uman.createUser("petio", "1234", "Petur", "Georgiev", "pgeorgiev@codingburgas.bg", NULL, true);
-    uman.createUser("petio", "1234", "Petur", "Georgiev", "pgeorgiev@codingburgas.bg", NULL, true);
     initscr();
     
     pm::pl::configCurses();
     views = pm::pl::initTUI();
     pm::pl::TUI(views);
-
 
     endwin();
 }

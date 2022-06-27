@@ -6,10 +6,26 @@ void updateViews()
     doupdate();
 }
 
-void handleInput() 
+void handleInput(pm::pl::managmentView& v) 
 {
     switch (getch())
     {
+    case 'u':
+    case 'U':
+        v = pm::pl::managmentView::User;
+        break;
+    case 't':
+    case 'T':
+        v = pm::pl::managmentView::Team;
+        break;
+    case 'p':
+    case 'P':
+        v = pm::pl::managmentView::Project;
+        break;
+    case 'q':
+    case 'Q':
+        exit(0);
+        break;
     }
 }
 
@@ -121,7 +137,7 @@ void pm::pl::TUI(pm::pl::VIEW* views)
         clearWindows(mView, views);
         displayView(mView, views[2].win);
         updateViews();
-        handleInput();
+        handleInput(mView);
     }
 }
 
