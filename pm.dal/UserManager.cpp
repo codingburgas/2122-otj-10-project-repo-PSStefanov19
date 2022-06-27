@@ -100,6 +100,11 @@ int pm::dal::UserManager::getLastId()
 
 void pm::dal::UserManager::createDB()
 {
+	if (std::filesystem::exists("../data/users.csv")) 
+	{
+		return;
+	}
+
 	db.open("../data/users.csv", std::ios::out);
 
 	if (!db.is_open()) 
