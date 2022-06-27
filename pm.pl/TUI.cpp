@@ -6,6 +6,13 @@ void updateViews()
     doupdate();
 }
 
+void handleInput() 
+{
+    switch (getch())
+    {
+    }
+}
+
 void clearWindows(pm::pl::managmentView v, pm::pl::VIEW* views)
 {
     for (size_t i = 0; i < 3; i++)
@@ -34,6 +41,9 @@ void clearWindows(pm::pl::managmentView v, pm::pl::VIEW* views)
     mvwprintw(views[1].win, 1, 2, "(C)reate");
     mvwprintw(views[1].win, 2, 2, "(E)dit");
     mvwprintw(views[1].win, 3, 2, "(D)elete");
+
+    mvwprintw(views[1].win, getmaxy(views[1].win) - 3, 2, "(L)og out");
+    mvwprintw(views[1].win, getmaxy(views[1].win) - 2, 2, "(Q)uit");
 }
 
 void pm::pl::configCurses()
@@ -104,14 +114,14 @@ void displayView(pm::pl::managmentView v, WINDOW* displayWin)
 
 void pm::pl::TUI(pm::pl::VIEW* views)
 {
-    managmentView m = User;
+    managmentView mView = User;
 
     while (true)
     {
-        clearWindows(m, views);
-        displayView(m, views[2].win);
+        clearWindows(mView, views);
+        displayView(mView, views[2].win);
         updateViews();
-        getch();
+        handleInput();
     }
 }
 
