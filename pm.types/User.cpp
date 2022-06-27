@@ -24,6 +24,11 @@ int pm::types::User::getId()
 	return id;
 }
 
+std::string pm::types::User::getPasswordHash() 
+{
+	return passwordHash;
+}
+
 std::string pm::types::User::getUsername()
 {
 	return username;
