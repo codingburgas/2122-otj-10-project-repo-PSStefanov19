@@ -24,10 +24,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="createData.h" />
     <ClInclude Include="login.h" />
     <ClInclude Include="retrieveData.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="createData.cpp" />
     <ClCompile Include="login.cpp" />
     <ClCompile Include="retrieveData.cpp" />
   </ItemGroup>

@@ -2,14 +2,14 @@
 
 
 void pm::dal::UserManager::createUser(const std::string username,
-	const std::string passwordHash,
+	const std::string password,
 	const std::string firstName,
 	const std::string lastName,
 	const std::string email,
 	const time_t dateOfCreation,
 	const bool isAdmin)
 {
-	static int lastId = getLastId() - 1;
+	static int lastId = getLastId();
 
 	db.open("../data/users.csv", std::ios::out | std::ios::app);
 
@@ -18,7 +18,7 @@ void pm::dal::UserManager::createUser(const std::string username,
 		throw "Could not open file";
 		return;
 	}
-	db << lastId << ", "<< username << ", " << md5(passwordHash) << ", " << firstName << ", " << lastName << ", " << email << ", " << dateOfCreation << "," <<isAdmin << "\n";
+	db << lastId << ", "<< username << ", " << md5(password) << ", " << firstName << ", " << lastName << ", " << email << ", " << dateOfCreation << "," <<isAdmin << "\n";
 	db.flush();
 
 	lastId++;
@@ -115,7 +115,7 @@ void pm::dal::UserManager::createDB()
 	time_t t = time(0);
 	tm* time = localtime(&t);
 	db << "Id,Username,Password,FirstName,LastName,Email,DateOfCreation,isAdmin\n";
-	db << lastId <<",admin," << md5("adminpass") << ",NULL,NULL,NULL," << std::put_time(time, "%F") << ",1\n";
+	db << 1 <<",admin," << md5("adminpass") << ",NULL,NULL,NULL," << std::put_time(time, "%F") << ",1\n";
 	lastId++;
 	db.flush();
 	db.close();
