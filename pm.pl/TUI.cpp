@@ -6,7 +6,7 @@ void updateViews()
     doupdate();
 }
 
-void createUserPanel(WINDOW* win)
+void showCreateUserPrompt(WINDOW* win)
 {
     mvwprintw(win, 0, 1, " Create User ");
     mvwprintw(win, 1, 1, "Username: ");
@@ -18,11 +18,11 @@ void createUserPanel(WINDOW* win)
 
     updateViews();
 
-    char username[20];
-    char password[20];
-    char firstName[20];
-    char lastName[20];
-    char email[20];
+    char username[30];
+    char password[30];
+    char firstName[30];
+    char lastName[30];
+    char email[30];
     int isAdmin;
 
     curs_set(1);
@@ -32,7 +32,7 @@ void createUserPanel(WINDOW* win)
     mvwscanw(win, 1, 12, "%s", &username);
     box(win, 0, 0);
     mvwprintw(win, 0, 1, " Create User ");
-    
+
     // Turn off echoing for password
     noecho();
     curs_set(0);
@@ -48,31 +48,81 @@ void createUserPanel(WINDOW* win)
     mvwscanw(win, 3, 14, "%s", &firstName);
     box(win, 0, 0);
     mvwprintw(win, 0, 1, " Create User ");
-    
+
     // Last name
     mvwscanw(win, 4, 13, "%s", &lastName);
     box(win, 0, 0);
     mvwprintw(win, 0, 1, " Create User ");
-    
+
     // Email
     mvwscanw(win, 5, 9, "%s", &email);
     box(win, 0, 0);
     mvwprintw(win, 0, 1, " Create User ");
-    
+
     // Admin privledges
     mvwscanw(win, 6, 12, "%d", &isAdmin);
     box(win, 0, 0);
     mvwprintw(win, 0, 1, " Create User ");
 
     createUser(username, password, firstName, lastName, email, isAdmin);
+
+    wclear(win);
 }
+
+void showDeleteUserPanel(WINDOW* win) 
+{
+    mvwprintw(win, 0, 1, " Delete user ");
+    
+    mvwprintw(win, 1, 1, "Id:");
+
+    updateViews();
+    
+    int id;
+    
+    echo();
+    curs_set(1);
+
+    mvwscanw(win, 1, 5, "%i", &id);
+
+    noecho();
+    curs_set(0);
+
+    if (verifyUserId(id)) 
+    {
+        wclear(win);
+        box(win, 0, 0);
+        mvwprintw(win, 0, 1, " Error ");
+        mvwprintw(win, 1, 1, "Incorrect Id");
+
+        updateViews();
+        getch();
+    }
+
+    wclear(win);
+}
+
+void setupDeletePrompt(const pm::pl::managmentView& v, WINDOW* win) 
+{
+    box(win, 0, 0);
+    switch (v)
+    {
+    case pm::pl::managmentView::User:
+        showDeleteUserPanel(win);
+        break;
+    case pm::pl::managmentView::Team:
+        break;
+    case pm::pl::managmentView::Project:
+        break;
+    }
+}
+
 void setupCreatePanel(const pm::pl::managmentView& v, WINDOW* win)
 {
     box(win, 0, 0);
     switch (v)
     {
     case pm::pl::managmentView::User:
-        createUserPanel(win);
+        showCreateUserPrompt(win);
         break;
     case pm::pl::managmentView::Team:
         break;
@@ -101,6 +151,12 @@ void handleInput(pm::pl::managmentView& v, PANEL* pan)
     case 'C':
         show_panel(pan);
         setupCreatePanel(v, panel_window(pan));
+        hide_panel(pan);
+        break;
+    case 'd':
+    case 'D':
+        show_panel(pan);
+        setupDeletePrompt(v, panel_window(pan));
         hide_panel(pan);
         break;
     case 'q':

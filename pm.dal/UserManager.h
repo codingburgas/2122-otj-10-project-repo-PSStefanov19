@@ -34,6 +34,7 @@ namespace pm
 				const std::string email,
 				const time_t dateOfCreation = 0,
 				const bool isAdmin = false);
+			void deleteUserById(int);
 
 			std::vector<pm::types::User> getAllUsers();
 			void createDB();
