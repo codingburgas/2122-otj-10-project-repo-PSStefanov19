@@ -127,6 +127,20 @@ int pm::dal::UserManager::getLastId()
     return i + 1;
 }
 
+pm::types::User pm::dal::UserManager::getUserByUsername(std::string username) 
+{
+    std::vector<pm::types::User> users = this->getAllUsers();
+
+    for (auto i = 0; i < users.size(); i++) 
+    {
+        if (users[i].getUsername() == username) 
+        {
+            return users[i];
+        }
+    }
+    throw "No user with that username";
+}
+
 void pm::dal::UserManager::createDB()
 {
     if (std::filesystem::exists("../data/users.csv"))

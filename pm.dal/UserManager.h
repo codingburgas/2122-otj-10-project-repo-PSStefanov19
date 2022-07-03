@@ -40,6 +40,8 @@ namespace pm
 			void createDB();
 
 			int getLastId();
+
+			pm::types::User getUserByUsername(std::string username);
 		private:
 			UserManager() {}
 

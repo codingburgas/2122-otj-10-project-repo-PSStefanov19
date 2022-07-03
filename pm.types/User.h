@@ -26,6 +26,7 @@ namespace pm
 				std::string,
 				time_t,
 				bool);
+			pm::types::User();
 			int getId();
 			std::string getPasswordHash();
 			std::string getUsername();

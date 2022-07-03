@@ -37,7 +37,7 @@ void createUser(std::string username,
     {
         return;
     }
-    if (verifyString(email, "@", ".")) 
+    if (!verifyString(email, "@", ".")) 
     {
         return;
     }

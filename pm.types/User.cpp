@@ -19,6 +19,18 @@ pm::types::User::User(int i,
 	this->isAdmin = isAdmin;
 }
 
+pm::types::User::User() 
+{
+	id = NULL;
+	passwordHash = "";
+	username = "";
+	firstName = "";
+	lastName = "";
+	email = "";
+	dateOfCreation = NULL;
+	isAdmin = NULL;
+}
+
 int pm::types::User::getId()
 {
 	return id;

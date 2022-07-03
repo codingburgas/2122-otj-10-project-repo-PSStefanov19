@@ -1,7 +1,7 @@
 #include <iostream>
 #include <filesystem>
-#include "../pm.pl/TUI.h"
 
+#include "../pm.pl/TUI.h"
 #include "../pm.dal/UserManager.h"
 #include "../pm.dal/TeamManager.h"
 
@@ -18,12 +18,19 @@ int main()
     }
     uman.createDB();
     tman.createDB();
-    
+   
     initscr();
     
     pm::pl::configCurses();
     views = pm::pl::initTUI();
-    pm::pl::TUI(views);
+
+    pm::types::User sessionUser = pm::pl::loginScreen(views[3].win);
+    while (sessionUser.getId() == 0) 
+    {
+        sessionUser = pm::pl::loginScreen(views[3].win);
+    }
+    hide_panel(views[3].pan);
+    pm::pl::TUI(views, sessionUser);
 
     endwin();
 }

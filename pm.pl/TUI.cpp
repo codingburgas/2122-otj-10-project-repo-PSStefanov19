@@ -69,16 +69,16 @@ void showCreateUserPrompt(WINDOW* win)
     wclear(win);
 }
 
-void showDeleteUserPanel(WINDOW* win) 
+void showDeleteUserPanel(WINDOW* win)
 {
     mvwprintw(win, 0, 1, " Delete user ");
-    
+
     mvwprintw(win, 1, 1, "Id:");
 
     updateViews();
-    
+
     int id;
-    
+
     echo();
     curs_set(1);
 
@@ -87,7 +87,7 @@ void showDeleteUserPanel(WINDOW* win)
     noecho();
     curs_set(0);
 
-    if (verifyUserId(id)) 
+    if (verifyUserId(id))
     {
         wclear(win);
         box(win, 0, 0);
@@ -101,7 +101,7 @@ void showDeleteUserPanel(WINDOW* win)
     wclear(win);
 }
 
-void setupDeletePrompt(const pm::pl::managmentView& v, WINDOW* win) 
+void setupDeletePrompt(const pm::pl::managmentView& v, WINDOW* win)
 {
     box(win, 0, 0);
     switch (v)
@@ -131,7 +131,7 @@ void setupCreatePanel(const pm::pl::managmentView& v, WINDOW* win)
     }
 }
 
-void handleInput(pm::pl::managmentView& v, PANEL* pan)
+void handleInput(pm::pl::managmentView& v, PANEL* pan, pm::types::User& sessionUser)
 {
     switch (getch())
     {
@@ -159,6 +159,10 @@ void handleInput(pm::pl::managmentView& v, PANEL* pan)
         setupDeletePrompt(v, panel_window(pan));
         hide_panel(pan);
         break;
+    case 'l':
+    case 'L':
+        sessionUser = pm::pl::loginScreen(panel_window(pan));
+        break;
     case 'q':
     case 'Q':
         exit(0);
@@ -166,7 +170,7 @@ void handleInput(pm::pl::managmentView& v, PANEL* pan)
     }
 }
 
-void clearWindows(pm::pl::managmentView v, pm::pl::VIEW* views)
+void clearWindows(pm::pl::managmentView v, pm::pl::VIEW* views, pm::types::User sessionUser)
 {
     for (size_t i = 0; i < 3; i++)
     {
@@ -176,6 +180,8 @@ void clearWindows(pm::pl::managmentView v, pm::pl::VIEW* views)
     mvwprintw(views[0].win, 0, 1, " (U)sers Managment ");
     mvwprintw(views[0].win, 0, 21, " (T)eams Managment ");
     mvwprintw(views[0].win, 0, 41, " (P)roject Managment ");
+    
+    mvwprintw(views[0].win, 0, getmaxx(views[0].win) - 44, "Logged as: %s ", sessionUser.getUsername().c_str());
 
     switch (v)
     {
@@ -204,6 +210,31 @@ void pm::pl::configCurses()
     raw();
     noecho();
     curs_set(0);
+}
+
+pm::types::User pm::pl::loginScreen(WINDOW* win)
+{
+    box(win, 0, 0);
+    mvwprintw(win, 0, 1, " Login ");
+
+    mvwprintw(win, 1, 1, "Username: ");
+    mvwprintw(win, 2, 1, "Password: ");
+
+    char username[30];
+    char password[30];
+
+    echo();
+    curs_set(1);
+
+    mvwscanw(win, 1, 11, "%s", &username);
+
+    noecho();
+    curs_set(0);
+
+    mvwscanw(win, 2, 11, "%s", &password);
+
+    wclear(win);
+    return login(username, password);
 }
 
 pm::pl::VIEW* pm::pl::initTUI()
@@ -263,16 +294,16 @@ void displayView(pm::pl::managmentView v, WINDOW* displayWin)
     }
 }
 
-void pm::pl::TUI(pm::pl::VIEW* views)
+void pm::pl::TUI(pm::pl::VIEW* views, pm::types::User sessionUser)
 {
     pm::pl::managmentView mView = User;
 
     while (true)
     {
-        clearWindows(mView, views);
+        clearWindows(mView, views, sessionUser);
         displayView(mView, views[2].win);
         updateViews();
-        handleInput(mView, views[3].pan);
+        handleInput(mView, views[3].pan, sessionUser);
     }
 }
 

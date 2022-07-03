@@ -5,6 +5,7 @@
 #include "../pm.bll/retrieveData.h"
 #include "../pm.bll/createData.h"
 #include "../pm.bll/deleteData.h"
+#include "../pm.bll/login.h"
 
 #include <vector>
 #include <string>
@@ -27,8 +28,11 @@ namespace pm
         
         void configCurses();
 
+        pm::types::User loginScreen(WINDOW* win);
+
         VIEW* initTUI();
 
-        void TUI(VIEW* views);
+        void TUI(VIEW* views, pm::types::User);
+
     }
 }
