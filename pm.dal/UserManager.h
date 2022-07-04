@@ -42,6 +42,7 @@ namespace pm
 			int getLastId();
 
 			pm::types::User getUserByUsername(std::string username);
+
 		private:
 			UserManager() {}
 

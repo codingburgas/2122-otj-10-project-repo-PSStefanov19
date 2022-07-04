@@ -4,6 +4,7 @@
 #include "../pm.tools/panel.h"
 #include "../pm.bll/retrieveData.h"
 #include "../pm.bll/createData.h"
+#include "../pm.bll/editData.h"
 #include "../pm.bll/deleteData.h"
 #include "../pm.bll/login.h"
 

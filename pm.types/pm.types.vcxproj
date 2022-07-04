@@ -155,10 +155,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Project.h" />
     <ClInclude Include="Team.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Project.cpp" />
     <ClCompile Include="Team.cpp" />
     <ClCompile Include="User.cpp" />
   </ItemGroup>

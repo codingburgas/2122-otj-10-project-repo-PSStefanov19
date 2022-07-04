@@ -61,7 +61,32 @@ std::string pm::types::User::getEmail()
 	return email;
 }
 
+time_t pm::types::User::getDateOfCreation() 
+{
+	return dateOfCreation;
+}
+
 bool pm::types::User::getPrivlidges() 
 {
 	return isAdmin;
+}
+
+void pm::types::User::setUsername(std::string newUsername) 
+{
+	username = newUsername;
+}
+
+void pm::types::User::setPasswordHash(std::string newPasswordHash) 
+{
+	passwordHash = newPasswordHash;
+}
+
+void pm::types::User::setFirstName(std::string newFirstName) 
+{
+	firstName = newFirstName;
+}
+
+void pm::types::User::setLastName(std::string newLastName) 
+{
+	lastName = newLastName;
 }

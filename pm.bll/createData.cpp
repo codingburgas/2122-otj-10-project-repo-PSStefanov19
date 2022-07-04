@@ -44,5 +44,5 @@ void createUser(std::string username,
 
     pm::dal::UserManager& u = pm::dal::UserManager::getInstance();
 
-    u.createUser(username, password, firstName, lastName, email, getCurrentTime(), isAdmin);
+    u.createUser(username, md5(password), firstName, lastName, email, getCurrentTime(), isAdmin);
 }

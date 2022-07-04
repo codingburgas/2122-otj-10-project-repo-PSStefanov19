@@ -2,14 +2,14 @@
 
 
 void pm::dal::UserManager::createUser(const std::string username,
-    const std::string password,
+    const std::string passwordHash,
     const std::string firstName,
     const std::string lastName,
     const std::string email,
     const time_t dateOfCreation,
     const bool isAdmin)
 {
-    static int lastId = getLastId();
+    int lastId = getLastId();
 
     db.open("../data/users.csv", std::ios::out | std::ios::app);
 
@@ -17,7 +17,7 @@ void pm::dal::UserManager::createUser(const std::string username,
     {
         return;
     }
-    db << lastId << ", " << username << ", " << md5(password) << ", " << firstName << ", " << lastName << ", " << email << ", " << dateOfCreation << "," << isAdmin << "\n";
+    db << lastId << ", " << username << ", " << passwordHash << ", " << firstName << ", " << lastName << ", " << email << ", " << dateOfCreation << "," << isAdmin << "\n";
     db.flush();
 
     lastId++;
@@ -113,7 +113,7 @@ int pm::dal::UserManager::getLastId()
 
     std::string unused;
     int i = 0;
-
+    int counter = 0;
     if (!db.is_open())
     {
         return NULL;
@@ -121,9 +121,15 @@ int pm::dal::UserManager::getLastId()
 
     while (std::getline(db, unused))
     {
+        counter++;
         i = unused[0] - '0';
     }
     db.close();
+
+    if (counter == 1) 
+    {
+        return 1;
+    }
     return i + 1;
 }
 
@@ -163,4 +169,3 @@ void pm::dal::UserManager::createDB()
     db.flush();
     db.close();
 }
-

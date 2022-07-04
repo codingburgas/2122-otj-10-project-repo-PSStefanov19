@@ -26,12 +26,14 @@
   <ItemGroup>
     <ClInclude Include="createData.h" />
     <ClInclude Include="deleteData.h" />
+    <ClInclude Include="editData.h" />
     <ClInclude Include="login.h" />
     <ClInclude Include="retrieveData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="createData.cpp" />
     <ClCompile Include="deleteData.cpp" />
+    <ClCompile Include="editData.cpp" />
     <ClCompile Include="login.cpp" />
     <ClCompile Include="retrieveData.cpp" />
   </ItemGroup>

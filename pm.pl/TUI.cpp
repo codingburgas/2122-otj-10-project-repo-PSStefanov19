@@ -97,6 +97,10 @@ void showEditUserPanel(WINDOW* win)
     
     noecho();
     curs_set(0);
+    
+    editUser(id, username, password, firstName, lastName);
+
+    wclear(win);
 }
 
 void showDeleteUserPanel(WINDOW* win)
