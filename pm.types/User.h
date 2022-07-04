@@ -33,6 +33,7 @@ namespace pm
 			std::string getFirstName();
 			std::string getLastName();
 			std::string getEmail();
+			bool getPrivlidges();
 		};
 	}
 }

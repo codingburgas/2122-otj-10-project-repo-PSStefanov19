@@ -279,13 +279,20 @@ void displayUsers(WINDOW* displayWin)
     }
 }
 
-void displayView(pm::pl::managmentView v, WINDOW* displayWin)
+void displayView(pm::pl::managmentView v, WINDOW* displayWin, pm::types::User sessionUser)
 {
     switch (v)
     {
     case pm::pl::User:
-        setupUserView(displayWin);
-        displayUsers(displayWin);
+        if (sessionUser.getPrivlidges())
+        {
+            setupUserView(displayWin);
+            displayUsers(displayWin);
+        }
+        else 
+        {
+            mvwprintw(displayWin, 1, 1, "User is not admin");
+        }
         break;
     case pm::pl::Team:
         break;
@@ -301,7 +308,7 @@ void pm::pl::TUI(pm::pl::VIEW* views, pm::types::User sessionUser)
     while (true)
     {
         clearWindows(mView, views, sessionUser);
-        displayView(mView, views[2].win);
+        displayView(mView, views[2].win, sessionUser);
         updateViews();
         handleInput(mView, views[3].pan, sessionUser);
     }

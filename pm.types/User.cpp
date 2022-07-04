@@ -61,3 +61,7 @@ std::string pm::types::User::getEmail()
 	return email;
 }
 
+bool pm::types::User::getPrivlidges() 
+{
+	return isAdmin;
+}
