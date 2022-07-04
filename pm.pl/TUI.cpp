@@ -69,6 +69,36 @@ void showCreateUserPrompt(WINDOW* win)
     wclear(win);
 }
 
+void showEditUserPanel(WINDOW* win) 
+{
+    mvwprintw(win, 0, 1, " Edit ");
+    mvwprintw(win, 1, 1, "User Id:");
+    mvwprintw(win, 2, 1, "New Username:");
+    mvwprintw(win, 3, 1, "New Password:");
+    mvwprintw(win, 4, 1, "New First name:");
+    mvwprintw(win, 5, 1, "New Last name:");
+
+    updateViews();
+    
+    int id;
+    char username[20];
+    char password[20];
+    char firstName[20];
+    char lastName[20];
+
+    echo();
+    curs_set(1);
+    
+    mvwscanw(win, 1, 10, "%i", &id);
+    mvwscanw(win, 2, 15, "%s", &username);
+    mvwscanw(win, 3, 15, "%s", &password);
+    mvwscanw(win, 4, 17, "%s", &firstName);
+    mvwscanw(win, 5, 16, "%s", &lastName);
+    
+    noecho();
+    curs_set(0);
+}
+
 void showDeleteUserPanel(WINDOW* win)
 {
     mvwprintw(win, 0, 1, " Delete user ");
@@ -131,6 +161,20 @@ void setupCreatePanel(const pm::pl::managmentView& v, WINDOW* win)
     }
 }
 
+void  setupEditPanel(const pm::pl::managmentView& v, WINDOW* win) 
+{
+    box(win, 0, 0);
+    switch (v) 
+    {
+    case pm::pl::managmentView::User:
+        showEditUserPanel(win);
+    case pm::pl::managmentView::Team:
+        break;
+    case pm::pl::managmentView::Project:
+        break;
+    }
+}
+
 void handleInput(pm::pl::managmentView& v, PANEL* pan, pm::types::User& sessionUser)
 {
     switch (getch())
@@ -149,15 +193,30 @@ void handleInput(pm::pl::managmentView& v, PANEL* pan, pm::types::User& sessionU
         break;
     case 'c':
     case 'C':
-        show_panel(pan);
-        setupCreatePanel(v, panel_window(pan));
-        hide_panel(pan);
+        if (sessionUser.getPrivlidges()) 
+        {
+            show_panel(pan);
+            setupCreatePanel(v, panel_window(pan));
+            hide_panel(pan);
+        }
+        break;
+    case 'e':
+    case 'E':
+        if (sessionUser.getPrivlidges())
+        {
+            show_panel(pan);
+            setupEditPanel(v, panel_window(pan));
+            hide_panel(pan);
+        }
         break;
     case 'd':
     case 'D':
-        show_panel(pan);
-        setupDeletePrompt(v, panel_window(pan));
-        hide_panel(pan);
+        if (sessionUser.getPrivlidges())
+        {
+            show_panel(pan);
+            setupDeletePrompt(v, panel_window(pan));
+            hide_panel(pan);
+        }
         break;
     case 'l':
     case 'L':
@@ -291,7 +350,8 @@ void displayView(pm::pl::managmentView v, WINDOW* displayWin, pm::types::User se
         }
         else 
         {
-            mvwprintw(displayWin, 1, 1, "User is not admin");
+            mvwprintw(displayWin, 1, 1, "User is not admin.");
+            mvwprintw(displayWin, 2, 1, "You will not be able to modify the users(e.g. Create, Edit, Delete).");
         }
         break;
     case pm::pl::Team:

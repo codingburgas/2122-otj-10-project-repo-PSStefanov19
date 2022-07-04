@@ -138,7 +138,7 @@ pm::types::User pm::dal::UserManager::getUserByUsername(std::string username)
             return users[i];
         }
     }
-    throw "No user with that username";
+    return pm::types::User();
 }
 
 void pm::dal::UserManager::createDB()
