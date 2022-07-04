@@ -1,5 +1,11 @@
 #include "retrieveData.h"
 
+/**
+ * . Function that formats a vector of users
+ * 
+ * \param users Vector of users
+ * \return Vector of strings with formated user information
+ */
 std::vector<std::string> formatUsers(std::vector<pm::types::User> users) 
 {
     std::vector<std::string> formattedUsers;
@@ -28,6 +34,11 @@ std::vector<std::string> formatUsers(std::vector<pm::types::User> users)
     return formattedUsers;
 }
 
+/**
+ * . Function to return vector of formatted user information
+ * 
+ * \return Formatted user information
+ */
 std::vector<std::string> pm::bll::getAllUsersFormatted()
 {
     pm::dal::UserManager& uman = pm::dal::UserManager::getInstance();
