@@ -91,7 +91,14 @@ void showEditUserPanel(WINDOW* win)
     
     mvwscanw(win, 1, 10, "%i", &id);
     mvwscanw(win, 2, 15, "%s", &username);
+
+    noecho();
+    curs_set(0);
     mvwscanw(win, 3, 15, "%s", &password);
+    
+    echo();
+    curs_set(1);
+
     mvwscanw(win, 4, 17, "%s", &firstName);
     mvwscanw(win, 5, 16, "%s", &lastName);
     
