@@ -6,6 +6,9 @@ namespace pm
 {
 	namespace types 
 	{
+		/**
+		 * . Class representing user
+		 */
 		class User
 		{
 		private:
