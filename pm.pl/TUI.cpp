@@ -64,7 +64,7 @@ void showCreateUserPrompt(WINDOW* win)
     box(win, 0, 0);
     mvwprintw(win, 0, 1, " Create User ");
 
-    createUser(username, password, firstName, lastName, email, isAdmin);
+    pm::bll::createUser(username, password, firstName, lastName, email, isAdmin);
 
     wclear(win);
 }
@@ -105,7 +105,7 @@ void showEditUserPanel(WINDOW* win)
     noecho();
     curs_set(0);
     
-    editUser(id, username, password, firstName, lastName);
+    pm::bll::editUser(id, username, password, firstName, lastName);
 
     wclear(win);
 }
@@ -128,7 +128,7 @@ void showDeleteUserPanel(WINDOW* win)
     noecho();
     curs_set(0);
 
-    if (verifyUserId(id))
+    if (pm::bll::verifyUserId(id))
     {
         wclear(win);
         box(win, 0, 0);
@@ -304,7 +304,7 @@ pm::types::User pm::pl::loginScreen(WINDOW* win)
     mvwscanw(win, 2, 11, "%s", &password);
 
     wclear(win);
-    return login(username, password);
+    return pm::bll::login(username, password);
 }
 
 pm::pl::VIEW* pm::pl::initTUI()
@@ -341,7 +341,7 @@ void setupUserView(WINDOW* displayWin)
 void displayUsers(WINDOW* displayWin)
 {
     std::vector<std::string> users;
-    users = getAllUsersFormatted();
+    users = pm::bll::getAllUsersFormatted();
 
     for (size_t i = 0; i < users.size(); i++)
     {

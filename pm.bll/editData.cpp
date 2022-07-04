@@ -1,6 +1,6 @@
 #include "editData.h"
 
-void editUser(int id,
+void pm::bll::editUser(int id,
     std::string username,
     std::string password,
     std::string firstName,

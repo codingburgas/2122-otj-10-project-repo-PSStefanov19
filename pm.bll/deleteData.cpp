@@ -1,6 +1,6 @@
 #include "deleteData.h"
 
-int verifyUserId(int id)
+int pm::bll::verifyUserId(int id)
 {
     pm::dal::UserManager& u = pm::dal::UserManager::getInstance();
 

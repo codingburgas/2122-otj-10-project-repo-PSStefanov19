@@ -6,4 +6,10 @@
 #include <vector>
 #include <string>
 
-std::vector<std::string> getAllUsersFormatted();
+namespace pm
+{
+    namespace bll
+    {
+        std::vector<std::string> getAllUsersFormatted();
+    }
+}

@@ -1,6 +1,6 @@
 #include "login.h"
 
-pm::types::User login(std::string username, std::string password)
+pm::types::User pm::bll::login(std::string username, std::string password)
 {
     pm::dal::UserManager& u = pm::dal::UserManager::getInstance();
     

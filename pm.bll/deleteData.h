@@ -2,5 +2,10 @@
 
 #include "../pm.dal/UserManager.h"
 
-int verifyUserId(int id);
-
+namespace pm
+{
+    namespace bll
+    {
+        int verifyUserId(int id);
+    }
+}

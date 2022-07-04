@@ -3,4 +3,10 @@
 #include "../pm.dal/UserManager.h"
 #include <vector>
 
-pm::types::User login(std::string username, std::string password);
+namespace pm
+{
+    namespace bll
+    {
+        pm::types::User login(std::string username, std::string password);
+    }
+}

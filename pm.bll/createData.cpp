@@ -11,7 +11,7 @@ time_t getCurrentTime()
     return time(0);
 }
 
-void createUser(std::string username,
+void pm::bll::createUser(std::string username,
     std::string password, 
     std::string firstName,
     std::string lastName,

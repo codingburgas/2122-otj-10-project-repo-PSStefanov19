@@ -28,7 +28,7 @@ std::vector<std::string> formatUsers(std::vector<pm::types::User> users)
     return formattedUsers;
 }
 
-std::vector<std::string> getAllUsersFormatted()
+std::vector<std::string> pm::bll::getAllUsersFormatted()
 {
     pm::dal::UserManager& uman = pm::dal::UserManager::getInstance();
 
