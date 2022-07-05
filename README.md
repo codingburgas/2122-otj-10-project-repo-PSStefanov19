@@ -9,6 +9,10 @@ Project managment applicaiton for on the job assignment given by Technologica
 - [PDcurses](https://github.com/wmcbrine/PDCurses)
 - MD5 hashing - converted by Frank Thilo for bzflag
 
+## Documentation and presentation
+- [Documentaiton](https://github.com/codingburgas/2122-otj-10-project-repo-PSStefanov19/tree/master/documentation)
+- [Presentation](https://codingburgas-my.sharepoint.com/:p:/g/personal/psstefanov19_codingburgas_bg/EUYQ5pbPBHtFqm6wnJQuj6EBrSygUmiB3ryv_f0R8vfVlg?e=OAYaHR)
+
 ## Setting up
 
 1. First clone the repo
