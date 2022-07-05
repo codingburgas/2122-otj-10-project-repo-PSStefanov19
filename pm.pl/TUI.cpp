@@ -300,7 +300,9 @@ void handleInput(pm::pl::managmentView& v, PANEL* pan, pm::types::User& sessionU
     // Logout
     case 'l':
     case 'L':
-        sessionUser = pm::pl::loginScreen(panel_window(pan));
+        do {
+            sessionUser = pm::pl::loginScreen(panel_window(pan));
+        } while (sessionUser.getId() == 0);
         break;
     // Quit application
     case 'q':
