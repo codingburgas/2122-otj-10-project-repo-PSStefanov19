@@ -14,6 +14,9 @@ namespace pm
 {
     namespace pl 
     {
+        /**
+         * . Enumerator that holds all views
+         */
         typedef enum managmentView 
         {
             User,
@@ -21,6 +24,9 @@ namespace pm
             Project
         } managmentView;
 
+        /**
+         * . Structure that holds a window and correspoding panel
+         */
         struct VIEW
         {
             WINDOW* win;

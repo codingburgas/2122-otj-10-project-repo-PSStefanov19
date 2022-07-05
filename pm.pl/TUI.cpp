@@ -1,13 +1,23 @@
 #include "TUI.h"
 
+/**
+ * . Function that updates all Views
+ * 
+ */
 void updateViews()
 {
     update_panels();
     doupdate();
 }
 
+/**
+ * . Function that sets up user prompt and gets information for user creation
+ * 
+ * \param win Popup window with all information fields
+ */
 void showCreateUserPrompt(WINDOW* win)
 {
+    // Print all fields on screen
     mvwprintw(win, 0, 1, " Create User ");
     mvwprintw(win, 1, 1, "Username: ");
     mvwprintw(win, 2, 1, "Password: ");
@@ -18,6 +28,7 @@ void showCreateUserPrompt(WINDOW* win)
 
     updateViews();
 
+    // Information fields
     char username[30];
     char password[30];
     char firstName[30];
@@ -25,6 +36,7 @@ void showCreateUserPrompt(WINDOW* win)
     char email[30];
     int isAdmin;
 
+    // Make user written characters and cursor visible
     curs_set(1);
     echo();
 
@@ -40,6 +52,7 @@ void showCreateUserPrompt(WINDOW* win)
     mvwscanw(win, 2, 12, "%s", &password);
 
     mvwprintw(win, 0, 1, " Create User ");
+
     // Turn on echoing for other parts of input
     echo();
     curs_set(1);
@@ -66,11 +79,18 @@ void showCreateUserPrompt(WINDOW* win)
 
     pm::bll::createUser(username, password, firstName, lastName, email, isAdmin);
 
+    // Clear popup window after use
     wclear(win);
 }
 
+/**
+ * . Function that sets up user prompt and gets information for user editing
+ * 
+ * \param win Popup window with all information fields
+ */
 void showEditUserPanel(WINDOW* win) 
 {
+    // Print all fields on screen
     mvwprintw(win, 0, 1, " Edit ");
     mvwprintw(win, 1, 1, "User Id:");
     mvwprintw(win, 2, 1, "New Username:");
@@ -80,51 +100,66 @@ void showEditUserPanel(WINDOW* win)
 
     updateViews();
     
+    // Information fields
     int id;
     char username[20];
     char password[20];
     char firstName[20];
     char lastName[20];
 
+    // Make user written character and cursor visible
     echo();
     curs_set(1);
     
     mvwscanw(win, 1, 10, "%i", &id);
     mvwscanw(win, 2, 15, "%s", &username);
 
+    // Turn off echoing of characters and cursor for password
     noecho();
     curs_set(0);
     mvwscanw(win, 3, 15, "%s", &password);
     
+    // Turn it on back again
     echo();
     curs_set(1);
 
     mvwscanw(win, 4, 17, "%s", &firstName);
     mvwscanw(win, 5, 16, "%s", &lastName);
     
+    // Turn off echoing
     noecho();
     curs_set(0);
     
+    // Edit user
     pm::bll::editUser(id, username, password, firstName, lastName);
 
+    // Clear window after use
     wclear(win);
 }
 
+/**
+ * . Function that sets up user prompt and gets information for user deletion
+ * 
+ * \param win Popup window with all information fields
+ */
 void showDeleteUserPanel(WINDOW* win)
 {
+    // Print all fields on screen
     mvwprintw(win, 0, 1, " Delete user ");
-
     mvwprintw(win, 1, 1, "Id:");
 
     updateViews();
-
+    
+    // Information fields
     int id;
 
+    // Turn on echoing of characters and cursor
     echo();
     curs_set(1);
 
     mvwscanw(win, 1, 5, "%i", &id);
 
+    // Turn off echoing and cursor
     noecho();
     curs_set(0);
 
@@ -139,9 +174,16 @@ void showDeleteUserPanel(WINDOW* win)
         getch();
     }
 
+    // Clear window after user
     wclear(win);
 }
 
+/**
+ * . Function that sets up delete prompt
+ * 
+ * \param v Managment view
+ * \param win Window to be displayed to
+ */
 void setupDeletePrompt(const pm::pl::managmentView& v, WINDOW* win)
 {
     box(win, 0, 0);
@@ -157,6 +199,13 @@ void setupDeletePrompt(const pm::pl::managmentView& v, WINDOW* win)
     }
 }
 
+
+/**
+ * . Function that sets up create prompt
+ * 
+ * \param v Managment view
+ * \param win Window to be displayed to
+ */
 void setupCreatePanel(const pm::pl::managmentView& v, WINDOW* win)
 {
     box(win, 0, 0);
@@ -172,6 +221,12 @@ void setupCreatePanel(const pm::pl::managmentView& v, WINDOW* win)
     }
 }
 
+/**
+ * . Function that sets up edit prompt
+ * 
+ * \param v Managment view
+ * \param win Window to be displayed to
+ */
 void  setupEditPanel(const pm::pl::managmentView& v, WINDOW* win) 
 {
     box(win, 0, 0);
@@ -186,22 +241,33 @@ void  setupEditPanel(const pm::pl::managmentView& v, WINDOW* win)
     }
 }
 
+/**
+ * . Function that handles input
+ * 
+ * \param v Managment view
+ * \param pan Popup panel
+ * \param sessionUser Logged in user
+ */
 void handleInput(pm::pl::managmentView& v, PANEL* pan, pm::types::User& sessionUser)
 {
     switch (getch())
     {
+    // Switch to user managment view
     case 'u':
     case 'U':
         v = pm::pl::managmentView::User;
         break;
+    // Switch to Team managment view
     case 't':
     case 'T':
         v = pm::pl::managmentView::Team;
         break;
+    // Switch to Project managment view
     case 'p':
     case 'P':
         v = pm::pl::managmentView::Project;
         break;
+    // Open create prompt
     case 'c':
     case 'C':
         if (sessionUser.getPrivlidges()) 
@@ -211,6 +277,7 @@ void handleInput(pm::pl::managmentView& v, PANEL* pan, pm::types::User& sessionU
             hide_panel(pan);
         }
         break;
+    // Open edit prompt
     case 'e':
     case 'E':
         if (sessionUser.getPrivlidges())
@@ -220,6 +287,7 @@ void handleInput(pm::pl::managmentView& v, PANEL* pan, pm::types::User& sessionU
             hide_panel(pan);
         }
         break;
+    // Open delete prompt
     case 'd':
     case 'D':
         if (sessionUser.getPrivlidges())
@@ -229,10 +297,12 @@ void handleInput(pm::pl::managmentView& v, PANEL* pan, pm::types::User& sessionU
             hide_panel(pan);
         }
         break;
+    // Logout
     case 'l':
     case 'L':
         sessionUser = pm::pl::loginScreen(panel_window(pan));
         break;
+    // Quit application
     case 'q':
     case 'Q':
         exit(0);
@@ -240,19 +310,31 @@ void handleInput(pm::pl::managmentView& v, PANEL* pan, pm::types::User& sessionU
     }
 }
 
+/**
+ * . Function that clears windows to desired state
+ * 
+ * \param v Managment view
+ * \param views All views
+ * \param sessionUser Logged in user
+ */
 void clearWindows(pm::pl::managmentView v, pm::pl::VIEW* views, pm::types::User sessionUser)
 {
+    // Clear all windows and put a box around them
     for (size_t i = 0; i < 3; i++)
     {
         wclear(views[i].win);
         box(views[i].win, 0, 0);
     }
+
+    // Write headers for Managment views
     mvwprintw(views[0].win, 0, 1, " (U)sers Managment ");
     mvwprintw(views[0].win, 0, 21, " (T)eams Managment ");
     mvwprintw(views[0].win, 0, 41, " (P)roject Managment ");
     
+    // Add logged in infromation
     mvwprintw(views[0].win, 0, getmaxx(views[0].win) - 44, "Logged as: %s ", sessionUser.getUsername().c_str());
 
+    // Highlight selected view
     switch (v)
     {
     case pm::pl::User:
@@ -266,15 +348,19 @@ void clearWindows(pm::pl::managmentView v, pm::pl::VIEW* views, pm::types::User 
         break;
     }
 
+    // Write all actions possible
     mvwprintw(views[1].win, 0, 1, " Actions ");
     mvwprintw(views[1].win, 1, 2, "(C)reate");
     mvwprintw(views[1].win, 2, 2, "(E)dit");
     mvwprintw(views[1].win, 3, 2, "(D)elete");
-
     mvwprintw(views[1].win, getmaxy(views[1].win) - 3, 2, "(L)og out");
     mvwprintw(views[1].win, getmaxy(views[1].win) - 2, 2, "(Q)uit");
 }
 
+/**
+ * . Function to cofig PDcurses
+ * 
+ */
 void pm::pl::configCurses()
 {
     raw();
@@ -282,6 +368,12 @@ void pm::pl::configCurses()
     curs_set(0);
 }
 
+/**
+ * . Function that displays login screen
+ * 
+ * \param win Window to be displayed to
+ * \return Logged in user
+ */
 pm::types::User pm::pl::loginScreen(WINDOW* win)
 {
     box(win, 0, 0);
@@ -307,6 +399,11 @@ pm::types::User pm::pl::loginScreen(WINDOW* win)
     return pm::bll::login(username, password);
 }
 
+/**
+ * . Initialization of TUI
+ * 
+ * \return Set up views
+ */
 pm::pl::VIEW* pm::pl::initTUI()
 {
     int screenWidth;
@@ -329,6 +426,11 @@ pm::pl::VIEW* pm::pl::initTUI()
     return views;
 }
 
+/**
+ * . Function to set up the user view
+ * 
+ * \param displayWin Window to be displayed to
+ */
 void setupUserView(WINDOW* displayWin)
 {
     mvwprintw(displayWin, 0, 1, " Id ");
@@ -338,17 +440,31 @@ void setupUserView(WINDOW* displayWin)
     mvwprintw(displayWin, 0, 66, " Email ");
 }
 
+/**
+ * . Function to display all users
+ * 
+ * \param displayWin Window to be displayed to
+ */
 void displayUsers(WINDOW* displayWin)
 {
+    // Get all users
     std::vector<std::string> users;
     users = pm::bll::getAllUsersFormatted();
 
+    // Print them to the screen
     for (size_t i = 0; i < users.size(); i++)
     {
         mvwprintw(displayWin, i + 1, 2, users[i].c_str());
     }
 }
 
+/**
+ * . Function that display information on the Managment View panel
+ * 
+ * \param v Managment View enum
+ * \param displayWin Window to be displayed to
+ * \param sessionUser Logged in user
+ */
 void displayView(pm::pl::managmentView v, WINDOW* displayWin, pm::types::User sessionUser)
 {
     switch (v)
@@ -366,12 +482,20 @@ void displayView(pm::pl::managmentView v, WINDOW* displayWin, pm::types::User se
         }
         break;
     case pm::pl::Team:
+        mvwprintw(displayWin, 1, 1, "Team information");
         break;
     case pm::pl::Project:
+        mvwprintw(displayWin, 1, 1, "Project information");
         break;
     }
 }
 
+/**
+ * . Main TUI function
+ * 
+ * \param views All views that can be used
+ * \param sessionUser Logged in user
+ */
 void pm::pl::TUI(pm::pl::VIEW* views, pm::types::User sessionUser)
 {
     pm::pl::managmentView mView = User;
