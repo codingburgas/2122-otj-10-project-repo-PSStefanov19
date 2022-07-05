@@ -65,7 +65,7 @@ void pm::dal::UserManager::deleteUserById(int id)
     while (std::getline(db, line))
     {
         // If the line is not the user add it to the file contents
-        if (id != line[0] - '0' && counter != 0)
+        if (id != line[0] - '0')
         {
             fileContents += line;
             fileContents += '\n';
